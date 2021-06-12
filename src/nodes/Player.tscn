@@ -21,12 +21,16 @@ animations = [ {
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0.5, 7 )
+position = Vector2( 0.5, -9 )
 shape = SubResource( 2 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -16 )
 frames = SubResource( 1 )
 animation = "run"
 __meta__ = {
