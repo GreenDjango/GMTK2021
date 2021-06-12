@@ -15,7 +15,7 @@ _global_script_class_icons={
 [application]
 
 config/name="GameJam"
-run/main_scene="res://src/scenes/main.tscn"
+run/main_scene="res://src/scenes/Main.tscn"
 boot_splash/image="res://assets/splashscreen.png"
 config/icon="res://assets/icon.png"
 
