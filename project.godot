@@ -33,6 +33,7 @@ window/size/width=320
 window/size/height=180
 window/size/test_width=960
 window/size/test_height=540
+window/dpi/allow_hidpi=true
 window/vsync/use_vsync=false
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
@@ -94,8 +95,9 @@ up={
 [rendering]
 
 quality/driver/driver_name="GLES2"
+quality/intended_usage/framebuffer_allocation=0
+quality/intended_usage/framebuffer_allocation.mobile=0
 2d/snapping/use_gpu_pixel_snap=true
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
-environment/default_environment="res://default_env.tres"
-quality/2d/use_pixel_snap=true
+quality/dynamic_fonts/use_oversampling=false
