@@ -4,7 +4,7 @@
 
 NAME is a **JAM game** for 💻**PC** / 🌐**Web**.
 
-[Game jam 2021](https://globalgamejam.org/2021/games/poungi-6) theme is `Lost & Found`.
+[GMTK Game jam 2021](https://itch.io/jam/gmtk-2021) theme is `Joined Together`.
 
 <!--- ![alt text](demo.gif 'Demo bonus') --->
 
@@ -26,7 +26,6 @@ Play at **[kiiks.itch.io](https://kiiks.itch.io/poungi)**
 - **[@Killian D.](https://github.com/kiiks)** 🐧
 - **[@Louis C.](https://github.com/Kdaudau)** 🦦
 - **[@Théo C.](https://github.com/GreenDjango)** 🐙
-- **[@Yann M.](https://github.com/Paquity)** 🐤
 
 <img src="assets/splashscreen.png" alt="GGJ icon" width="200" align="center"/>
 
