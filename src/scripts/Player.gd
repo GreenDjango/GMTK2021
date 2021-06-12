@@ -3,8 +3,8 @@ extends KinematicBody2D
 var velocity := Vector2.ZERO
 const speed_max := 70.0
 var acceleration := 0.1
-const acceleration_step := 0.02
-const friction := 020
+const acceleration_step := 0.04
+const friction := 6.0
 var player_sprite: AnimatedSprite = null
 
 func _ready():
