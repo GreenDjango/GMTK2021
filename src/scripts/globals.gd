@@ -2,6 +2,7 @@ extends Node
 
 var default_life := 3.0
 var life := default_life
+var is_debug : bool = OS.is_debug_build()
 
 func _ready():
 	randomize()
