@@ -8,6 +8,7 @@ const acceleration_step := 0.04
 const friction := 6.0
 onready var player_sprite := $Sprite
 onready var action_area := $ActionArea
+onready var action_shape := $ActionArea/CollisionShape2D
 
 func _ready():
 	player_sprite.play()
