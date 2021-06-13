@@ -9,6 +9,7 @@ var player_sprite: AnimatedSprite = null
 
 func _ready():
 	player_sprite = $Sprite
+	player_sprite.play()
 
 func _physics_process(_delta : float):
 	var input := Vector2.ZERO
@@ -26,7 +27,7 @@ func _move_player(input: Vector2):
 	if input != Vector2.ZERO:
 		if acceleration < 1:
 			acceleration += acceleration_step
-		player_sprite.play("run")
+		player_sprite.play("walk")
 	else:
 		if acceleration > 0.1:
 			acceleration -= acceleration_step*2
