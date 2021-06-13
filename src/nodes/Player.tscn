@@ -73,13 +73,14 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.5, 3 )
 shape = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
-position = Vector2( 0, -8 )
 frames = SubResource( 2 )
 animation = "idle"
-frame = 2
-playing = true
+offset = Vector2( 0, -8 )
 __meta__ = {
 "_edit_lock_": true
 }
