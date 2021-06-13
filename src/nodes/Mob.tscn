@@ -4,11 +4,12 @@
 
 [sub_resource type="CircleShape2D" id=1]
 
-[node name="Mob" type="RigidBody2D"]
+[node name="Mob" type="Node2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0.595268, 7.14331 )
+position = Vector2( 0, -1 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
+offset = Vector2( 0, -8 )
