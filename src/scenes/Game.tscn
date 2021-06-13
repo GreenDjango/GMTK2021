@@ -75,6 +75,9 @@ position = Vector2( 72, 25 )
 [node name="Tower" parent="YSort" instance=ExtResource( 10 )]
 position = Vector2( 230.927, 51.0576 )
 
+[node name="Tower2" parent="YSort" instance=ExtResource( 10 )]
+position = Vector2( 201.227, 116.465 )
+
 [node name="Cables" type="Node2D" parent="."]
 
 [node name="MainCable" parent="Cables" instance=ExtResource( 9 )]

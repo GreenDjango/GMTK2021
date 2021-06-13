@@ -3,6 +3,7 @@ extends KinematicBody2D
 var velocity := Vector2.ZERO
 const speed_max := 70.0
 var acceleration := 0.1
+var is_grab := false
 const acceleration_step := 0.04
 const friction := 6.0
 onready var player_sprite := $Sprite
