@@ -8,8 +8,20 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "Cable",
+"language": "GDScript",
+"path": "res://src/scripts/Cable.gd"
+}, {
+"base": "Node2D",
+"class": "Tower",
+"language": "GDScript",
+"path": "res://src/scripts/Tower.gd"
+} ]
 _global_script_class_icons={
+"Cable": "",
+"Tower": ""
 }
 
 [application]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://assets/sprites/ratio.png" type="Texture" id=1]
 [ext_resource path="res://src/nodes/Player.tscn" type="PackedScene" id=2]
@@ -7,6 +7,15 @@
 [ext_resource path="res://src/scripts/Camera.gd" type="Script" id=5]
 [ext_resource path="res://src/nodes/Mob.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/nodes/Castle.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/fonts/PressStart2P-vaV7.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://src/nodes/Cable.tscn" type="PackedScene" id=9]
+[ext_resource path="res://src/nodes/Tower.tscn" type="PackedScene" id=10]
+
+[sub_resource type="DynamicFont" id=1]
+size = 8
+outline_size = 1
+outline_color = Color( 0, 0, 0, 0.705882 )
+font_data = ExtResource( 8 )
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 4 )
@@ -14,6 +23,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 mob_scene = ExtResource( 6 )
+cable_scene = ExtResource( 9 )
 
 [node name="ratio" type="Sprite" parent="."]
 visible = false
@@ -30,7 +40,7 @@ __meta__ = {
 [node name="YSort" type="YSort" parent="."]
 
 [node name="Player" parent="YSort" instance=ExtResource( 2 )]
-position = Vector2( 180.217, 116.131 )
+position = Vector2( 172.787, 100.501 )
 
 [node name="Camera2D" type="Camera2D" parent="YSort/Player"]
 current = true
@@ -52,24 +62,36 @@ anchor_path = NodePath("../Anchor")
 player_path = NodePath("..")
 
 [node name="Anchor" type="Position2D" parent="YSort/Player"]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Mob" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 269.408, 105.359 )
+position = Vector2( 267.11, 104.475 )
 
 [node name="Castle" parent="YSort" instance=ExtResource( 7 )]
 position = Vector2( 72, 25 )
+
+[node name="Tower" parent="YSort" instance=ExtResource( 10 )]
+position = Vector2( 230.927, 51.0576 )
+
+[node name="Cables" type="Node2D" parent="."]
+
+[node name="MainCable" parent="Cables" instance=ExtResource( 9 )]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="DebugLabel" type="Label" parent="CanvasLayer"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -64.0
-margin_bottom = 64.0
+margin_left = -42.0
+margin_top = 3.0
+margin_right = -2.0
+margin_bottom = 11.0
 grow_horizontal = 0
+custom_fonts/font = SubResource( 1 )
 text = "Debug"
 align = 2
 __meta__ = {
-"_edit_lock_": true,
 "_edit_use_anchors_": false
 }

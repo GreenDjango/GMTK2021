@@ -5,10 +5,10 @@ const speed_max := 70.0
 var acceleration := 0.1
 const acceleration_step := 0.04
 const friction := 6.0
-var player_sprite: AnimatedSprite = null
+onready var player_sprite := $Sprite
+onready var action_area := $ActionArea
 
 func _ready():
-	player_sprite = $Sprite
 	player_sprite.play()
 
 func _physics_process(_delta : float):
@@ -49,3 +49,11 @@ func _move_player(input: Vector2):
 
 	# warning-ignore:return_value_discarded
 	move_and_slide(velocity)
+
+func get_nearby_towers() -> Array:
+	var areas = action_area.get_overlapping_areas()
+	var towers = []
+	for area in areas:
+		if area.is_in_group('tower'):
+			towers.push_back(area)
+	return towers
