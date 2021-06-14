@@ -17,13 +17,11 @@ func _process(_delta : float):
 		var process_time : float = Performance.get_monitor(Performance.TIME_PROCESS) * 1000
 		var fps = Engine.get_frames_per_second()
 		$CanvasLayer/DebugLabel.text = str(fps) + "fps " + str(process_time).pad_decimals(2) + "ms"
+	var find_cable := false
 	for cable in cables.get_children():
 		if is_under_cable(cable.from, cable.to, player.action_shape):
-
-		var A : Vector2 = player_area.global_position
-		var B : Vector2 = castle.global_position
-		var C := Vector2(195.278, 119.636)
-		
+			find_cable = true
+	$Sprite.visible = find_cable
 
 func _input(event : InputEvent):
 	if event.is_action_pressed("ui_accept"):
@@ -53,7 +51,7 @@ func put_cable(from : Vector2, to : Vector2):
 	main_cable.from = from
 	main_cable.to = to
 
-func is_under_cable(cable_start : Vector2, cable_end : Vector2, player_area : CollisionShape2D):
+func is_under_cable(cable_start : Vector2, cable_end : Vector2, player_area : CollisionShape2D) -> bool:
 		#     A: circle
 	#      /      |
 	#     /       |
@@ -63,10 +61,9 @@ func is_under_cable(cable_start : Vector2, cable_end : Vector2, player_area : Co
 	# https://math.stackexchange.com/questions/361412/finding-the-angle-between-three-points
 	# https://stackoverflow.com/a/1079478
 
-	var player_area : CollisionShape2D = player.action_shape
 	var A : Vector2 = player_area.global_position
-	var B : Vector2 = castle.global_position
-	var C := Vector2(195.278, 119.636)
+	var B : Vector2 = cable_start
+	var C : Vector2 = cable_end
 
 	var AB := B - A
 	var BC := C - B
@@ -80,10 +77,8 @@ func is_under_cable(cable_start : Vector2, cable_end : Vector2, player_area : Co
 	var zeta = acos(dot_prod / (AB_side * BC_side))
 	var AD_side = sin(zeta) * AB_side
 
-	if (AD_side <= player_area.shape.radius):
-		$Sprite.visible = true
-	else:
-		$Sprite.visible = false
+	return (AD_side <= player_area.shape.radius)
+
 
 func spawn_mob():
 	var scene : Node2D = mob_scene.instance()
