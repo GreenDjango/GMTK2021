@@ -19,23 +19,29 @@ func _process(_delta : float):
 		$CanvasLayer/DebugLabel.text = str(fps) + "fps " + str(process_time).pad_decimals(2) + "ms"
 	var find_cable := false
 	for cable in cables.get_children():
-		if is_under_cable(cable.from, cable.to, player.action_shape):
+		var section = is_under_cable(cable.from, cable.to, player.action_shape)
+		if section:
+			$Message.text = 'Cut'
+			$Message.rect_position = player.global_position - $Message.rect_size / 2
+			$Message.visible = true
 			find_cable = true
-	$Sprite.visible = find_cable
+			break
+	if !find_cable:
+		$Message.visible = false
+	# $Sprite.visible = find_cable
 
 func _input(event : InputEvent):
 	if event.is_action_pressed("ui_accept"):
 		var nearbyTowers : Array = player.get_nearby_towers()
-		if player.is_grab && nearbyTowers.size():
-			if nearbyTowers.size():
-				var tower : Tower = nearbyTowers[0]
-				var new_cable : Cable = cable_scene.instance()
-				cables.add_child(new_cable)
-				new_cable.from = castle.global_position
-				new_cable.to = tower.get_node("CableFix").global_position
-				release_cable()
-		else:
-			grab_cable(castle.global_position)
+		var tower : Node2D = nearbyTowers.pop_back()
+		if player.is_grab && tower:
+			var new_cable : Cable = cable_scene.instance()
+			cables.add_child(new_cable)
+			new_cable.from = main_cable.from
+			new_cable.to = tower.get_node("CableFix").global_position
+			release_cable()
+		elif !player.is_grab && tower:
+			grab_cable(tower.get_node("CableFix").global_position)
 
 func release_cable():
 	main_cable.visible = false
@@ -52,7 +58,7 @@ func put_cable(from : Vector2, to : Vector2):
 	main_cable.to = to
 
 func is_under_cable(cable_start : Vector2, cable_end : Vector2, player_area : CollisionShape2D) -> bool:
-		#     A: circle
+	#      A: circle
 	#      /      |
 	#     /       |
 	#    /        |

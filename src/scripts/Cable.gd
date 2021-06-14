@@ -6,6 +6,9 @@ var from := Vector2() setget setFrom, getFrom
 var to := Vector2() setget setTo, getTo
 var target : Node2D = null
 
+var ref_in : Node2D = null
+var ref_out : Node2D = null
+
 func _process(_delat : float):
 	if visible && target:
 		setTo(target.global_position)
