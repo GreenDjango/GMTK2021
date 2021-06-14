@@ -5,7 +5,7 @@ export(PackedScene) var cable_scene
 onready var player := $YSort/Player
 onready var castle := $YSort/Castle
 onready var cables := $Cables
-onready var cable := $Cables/MainCable
+onready var main_cable := $MainCable
 
 func _ready():
 	$CanvasLayer/DebugLabel.visible = Globals.is_debug
@@ -13,7 +13,48 @@ func _ready():
 	pass
 
 func _process(_delta : float):
-	#     A: circle
+	if Globals.is_debug:
+		var process_time : float = Performance.get_monitor(Performance.TIME_PROCESS) * 1000
+		var fps = Engine.get_frames_per_second()
+		$CanvasLayer/DebugLabel.text = str(fps) + "fps " + str(process_time).pad_decimals(2) + "ms"
+	for cable in cables.get_children():
+		if is_under_cable(cable.from, cable.to, player.action_shape):
+
+		var A : Vector2 = player_area.global_position
+		var B : Vector2 = castle.global_position
+		var C := Vector2(195.278, 119.636)
+		
+
+func _input(event : InputEvent):
+	if event.is_action_pressed("ui_accept"):
+		var nearbyTowers : Array = player.get_nearby_towers()
+		if player.is_grab && nearbyTowers.size():
+			if nearbyTowers.size():
+				var tower : Tower = nearbyTowers[0]
+				var new_cable : Cable = cable_scene.instance()
+				cables.add_child(new_cable)
+				new_cable.from = castle.global_position
+				new_cable.to = tower.get_node("CableFix").global_position
+				release_cable()
+		else:
+			grab_cable(castle.global_position)
+
+func release_cable():
+	main_cable.visible = false
+	player.is_grab = false
+
+func grab_cable(from : Vector2):
+	main_cable.from = from
+	main_cable.target = player
+	player.is_grab = true
+	main_cable.visible = true
+
+func put_cable(from : Vector2, to : Vector2):
+	main_cable.from = from
+	main_cable.to = to
+
+func is_under_cable(cable_start : Vector2, cable_end : Vector2, player_area : CollisionShape2D):
+		#     A: circle
 	#      /      |
 	#     /       |
 	#    /        |
@@ -43,40 +84,6 @@ func _process(_delta : float):
 		$Sprite.visible = true
 	else:
 		$Sprite.visible = false
-		
-
-	if Globals.is_debug:
-		var process_time : float = Performance.get_monitor(Performance.TIME_PROCESS) * 1000
-		var fps = Engine.get_frames_per_second()
-		$CanvasLayer/DebugLabel.text = str(fps) + "fps " + str(process_time).pad_decimals(2) + "ms"
-
-func _input(event : InputEvent):
-	if event.is_action_pressed("ui_accept"):
-		var nearbyTowers : Array = player.get_nearby_towers()
-		if player.is_grab && nearbyTowers.size():
-			if nearbyTowers.size():
-				var tower : Tower = nearbyTowers[0]
-				var new_cable : Cable = cable_scene.instance()
-				cables.add_child(new_cable)
-				new_cable.from = castle.global_position
-				new_cable.to = tower.get_node("CableFix").global_position
-				release_cable()
-		else:
-			grab_cable(castle.global_position)
-
-func release_cable():
-	cable.visible = false
-	player.is_grab = false
-
-func grab_cable(from : Vector2):
-	cable.from = from
-	cable.target = player
-	player.is_grab = true
-	cable.visible = true
-
-func put_cable(from : Vector2, to : Vector2):
-	cable.from = from
-	cable.to = to
 
 func spawn_mob():
 	var scene : Node2D = mob_scene.instance()

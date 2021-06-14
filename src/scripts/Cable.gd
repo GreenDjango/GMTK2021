@@ -2,8 +2,8 @@ extends Node2D
 
 class_name Cable
 
-var from := Vector2() setget setFrom
-var to := Vector2() setget setTo
+var from := Vector2() setget setFrom, getFrom
+var to := Vector2() setget setTo, getTo
 var target : Node2D = null
 
 func _process(_delat : float):
@@ -16,7 +16,13 @@ func _draw():
 func setFrom(param : Vector2):
 	from = to_local(param)
 	update()
+	
+func getFrom():
+	return to_global(from)
 
 func setTo(param : Vector2):
 	to = to_local(param)
 	update()
+
+func getTo():
+	return to_global(to)
