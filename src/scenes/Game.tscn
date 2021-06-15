@@ -11,11 +11,11 @@
 [ext_resource path="res://src/nodes/Cable.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/nodes/Tower.tscn" type="PackedScene" id=10]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=1]
 size = 8
 font_data = ExtResource( 8 )
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
 size = 8
 outline_size = 1
 outline_color = Color( 0, 0, 0, 0.705882 )
@@ -93,7 +93,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 margin_right = 8.0
 margin_bottom = 8.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 1 )
 text = "a"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -109,7 +109,7 @@ margin_top = 3.0
 margin_right = -2.0
 margin_bottom = 11.0
 grow_horizontal = 0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Debug"
 align = 2
 __meta__ = {

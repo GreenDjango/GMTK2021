@@ -52,6 +52,7 @@ func _move_player(input: Vector2):
 	# warning-ignore:return_value_discarded
 	move_and_slide(velocity)
 
+# don't use for now
 func get_nearby_castles() -> Array:
 	var areas = action_area.get_overlapping_areas()
 	var castles = []
