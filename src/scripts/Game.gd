@@ -24,6 +24,7 @@ func _physics_process(_delta : float):
 	for cable in cables.get_children():
 		var section = is_under_cable(cable.from, cable.to, player.action_shape)
 		if section:
+			break
 			$Message.text = 'Cut'
 			$Message.rect_position = player.global_position - $Message.rect_size / 2
 			$Message.visible = true
@@ -36,7 +37,7 @@ func _input(event : InputEvent):
 	if event.is_action_pressed("ui_accept"):
 		var nearbyTowers : Array = player.get_nearby_towers()
 		var tower : Node2D = nearbyTowers.pop_back()
-		if player.is_grab && tower:
+		if player.is_grab && tower && tower != main_cable.ref_in:
 			put_cable(tower)
 		elif !player.is_grab && tower:
 			grab_cable(tower)
@@ -81,6 +82,16 @@ func is_under_cable(cable_start : Vector2, cable_end : Vector2, player_area : Co
 	var A : Vector2 = player_area.global_position
 	var B : Vector2 = cable_start
 	var C : Vector2 = cable_end
+	var radius : float = player_area.shape.radius
+	
+	if A.x + radius < B.x && A.x + radius < C.x:
+		return false
+	if A.x - radius > B.x && A.x - radius > C.x:
+		return false
+	if A.y + radius < B.y && A.y + radius < C.y:
+		return false
+	if A.y - radius > B.y && A.y - radius > C.y:
+		return false
 
 	var AB := B - A
 	var BC := C - B
@@ -94,7 +105,14 @@ func is_under_cable(cable_start : Vector2, cable_end : Vector2, player_area : Co
 	var zeta = acos(dot_prod / (AB_side * BC_side))
 	var AD_side = sin(zeta) * AB_side
 
-	return (AD_side <= player_area.shape.radius)
+	if 1:
+		zeta = PI - zeta
+
+	if (AD_side <= radius):
+		$Test.position = Vector2( cos(zeta) , sin(zeta) ) * AD_side + A
+		# prints(rad2deg(zeta), AD_side, A, $Test.position)
+		return true
+	return false
 
 
 func spawn_mob():
