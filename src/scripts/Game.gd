@@ -21,17 +21,19 @@ func _process(_delta : float):
 
 func _physics_process(_delta : float):
 	active_cable = null
+	var cable_info = {"distance": INF}
 	for cable in cables.get_children():
 		var section = is_under_cable(cable.from, cable.to, player.action_shape)
-		if section:
-			break
-			$Message.text = 'Cut'
-			$Message.rect_position = player.global_position - $Message.rect_size / 2
-			$Message.visible = true
+		if section && section["distance"] < cable_info["distance"]:
+			cable_info = section
 			active_cable = cable
-			break
+
 	if !active_cable:
 		$Message.visible = false
+	else:
+		$Message.text = 'Cut'
+		$Message.rect_position = cable_info["cross_point"]
+		$Message.visible = true
 
 func _input(event : InputEvent):
 	if event.is_action_pressed("ui_accept"):
@@ -69,7 +71,7 @@ func release_cable():
 	main_cable.visible = false
 	player.is_grab = false
 
-func is_under_cable(cable_start : Vector2, cable_end : Vector2, player_area : CollisionShape2D) -> bool:
+func is_under_cable(cable_start : Vector2, cable_end : Vector2, player_area : CollisionShape2D):
 	#      A: circle
 	#      /      |
 	#     /       |
@@ -105,13 +107,12 @@ func is_under_cable(cable_start : Vector2, cable_end : Vector2, player_area : Co
 	var zeta = acos(dot_prod / (AB_side * BC_side))
 	var AD_side = sin(zeta) * AB_side
 
-	if 1:
-		zeta = PI - zeta
-
 	if (AD_side <= radius):
-		$Test.position = Vector2( cos(zeta) , sin(zeta) ) * AD_side + A
-		# prints(rad2deg(zeta), AD_side, A, $Test.position)
-		return true
+		var cross_point = Vector2()
+		cross_point.x = A.x
+		# Point-Slope Equation of a Line: y = m(x − x1) + y1
+		cross_point.y = (BC.y / BC.x ) * (A.x - B.x) + B.y
+		return {"cross_point": cross_point, "distance": AD_side}
 	return false
 
 

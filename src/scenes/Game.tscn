@@ -48,7 +48,7 @@ __meta__ = {
 [node name="YSort" type="YSort" parent="."]
 
 [node name="Player" parent="YSort" instance=ExtResource( 2 )]
-position = Vector2( 172.787, 100.501 )
+position = Vector2( 230, 110 )
 
 [node name="Camera2D" type="Camera2D" parent="YSort/Player"]
 current = true
@@ -75,16 +75,19 @@ __meta__ = {
 }
 
 [node name="Mob" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 267.11, 104.475 )
+position = Vector2( 250, 150 )
 
 [node name="Castle" parent="YSort" instance=ExtResource( 7 )]
 position = Vector2( 72, 25 )
 
 [node name="Tower" parent="YSort" instance=ExtResource( 10 )]
-position = Vector2( 230.927, 51.0576 )
+position = Vector2( 230, 51 )
 
 [node name="Tower2" parent="YSort" instance=ExtResource( 10 )]
-position = Vector2( 201.227, 116.465 )
+position = Vector2( 200, 115 )
+
+[node name="Tower3" parent="YSort" instance=ExtResource( 10 )]
+position = Vector2( 280, 115 )
 
 [node name="MainCable" parent="." instance=ExtResource( 9 )]
 
@@ -95,15 +98,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_right = 8.0
+margin_right = 15.0
 margin_bottom = 8.0
 custom_fonts/font = SubResource( 1 )
-text = "a"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Test" type="MeshInstance2D" parent="."]
+visible = false
 mesh = SubResource( 2 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
