@@ -38,18 +38,18 @@ func _physics_process(_delta : float):
 func _input(event : InputEvent):
 	if event.is_action_pressed("ui_accept"):
 		var nearbyTowers : Array = player.get_nearby_towers()
-		var tower : Node2D = nearbyTowers.pop_back()
+		var tower = nearbyTowers.pop_back()
 		if player.is_grab && tower && tower != main_cable.ref_in:
 			put_cable(tower)
 		elif !player.is_grab && tower:
 			grab_cable(tower)
 	if event.is_action_pressed("cut"):
 		if active_cable:
-			# TODO: erase cable ref in towers
-			print(active_cable.ref_in, active_cable.ref_out)
+			active_cable.reset()
 			active_cable.queue_free()
+			refresh_towers_connections()
 
-func grab_cable(tower : Node2D):
+func grab_cable(tower : TowerInterface):
 	main_cable.from = tower.get_cablefix().global_position
 	main_cable.target = player
 	main_cable.ref_in = tower
@@ -57,7 +57,7 @@ func grab_cable(tower : Node2D):
 	main_cable.visible = true
 	player.is_grab = true
 
-func put_cable(tower : Node2D):
+func put_cable(tower : TowerInterface):
 	var new_cable : Cable = cable_scene.instance()
 	cables.add_child(new_cable)
 	new_cable.from = main_cable.from
@@ -65,11 +65,38 @@ func put_cable(tower : Node2D):
 	new_cable.ref_in = main_cable.ref_in
 	new_cable.ref_out = tower
 	release_cable()
+	refresh_towers_connections()
 
 func release_cable():
 	main_cable.reset()
 	main_cable.visible = false
 	player.is_grab = false
+	
+func refresh_towers_connections():
+	debug_links()
+	var towers = get_tree().get_nodes_in_group("tower")
+	for tower in towers:
+		if tower.has_method("turn_off"):
+			tower.turn_off()
+	refresh_towers_connections_rec(castle)
+
+func refresh_towers_connections_rec(tower : TowerInterface):
+	if tower.has_method("turn_on"):
+		tower.turn_on()
+	for cable in tower.ref_cables.values():
+		var next_tower = cable.ref_in if cable.ref_in != tower else cable.ref_out
+		if !next_tower.is_on:
+			refresh_towers_connections_rec(next_tower)
+
+func debug_links():
+	var towers = get_tree().get_nodes_in_group("tower")
+	print('--- TOWERS')
+	for tower in towers:
+		prints(tower, tower.ref_cables)
+	print('--- CABLES')
+	prints(main_cable, main_cable.ref_in, main_cable.ref_out)
+	for cable in cables.get_children():
+		prints(cable, cable.ref_in, cable.ref_out)
 
 func is_under_cable(cable_start : Vector2, cable_end : Vector2, player_area : CollisionShape2D):
 	#      A: circle

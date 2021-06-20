@@ -20,8 +20,8 @@ func reset():
 	setFrom(Vector2.ZERO)
 	setTo(Vector2.ZERO)
 	target = null
-	ref_in = null
-	ref_out = null
+	setRefIn(null)
+	setRefOut(null)
 
 func setFrom(param : Vector2):
 	from = to_local(param)
@@ -38,11 +38,15 @@ func getTo():
 	return to_global(to)
 
 func setRefIn(param : Node2D):
-	if "ref_cables" in param && param.ref_cables is Array:
-		param.ref_cables.push_back(self)
+	if ref_in && ref_in.has_method("remove_cable"):
+		ref_in.remove_cable(self)
+	if param && param.has_method("add_cable"):
+		param.add_cable(self)
 	ref_in = param
 
 func setRefOut(param : Node2D):
-	if "ref_cables" in param && param.ref_cables is Array:
-		param.ref_cables.push_back(self)
+	if ref_out && ref_out.has_method("remove_cable"):
+		ref_out.remove_cable(self)
+	if param && param.has_method("add_cable"):
+		param.add_cable(self)
 	ref_out = param
