@@ -6,10 +6,12 @@ onready var player := $YSort/Player
 onready var castle := $YSort/Castle
 onready var cables := $Cables
 onready var main_cable := $MainCable
+onready var panels : MovablePanels = $MovablePanels
 var active_cable : Cable = null
 
 func _ready():
 	$CanvasLayer/DebugLabel.visible = Globals.is_debug
+	panels.visible = true
 	# print($Map.get_cell(1,1))
 	pass
 
@@ -20,6 +22,13 @@ func _process(_delta : float):
 		$CanvasLayer/DebugLabel.text = str(fps) + "fps " + str(process_time).pad_decimals(2) + "ms"
 
 func _physics_process(_delta : float):
+	var nearbyTowers : Array = player.get_nearby_towers()
+	var tower = nearbyTowers.pop_back()
+	if not tower:
+		panels.switch_panel("tower", false)
+	elif not panels.is_panel_visible("tower"):
+		panels.switch_panel("tower", true, tower.get_cablefix().global_position, true)
+
 	active_cable = null
 	var cable_info = {"distance": INF}
 	for cable in cables.get_children():
@@ -29,11 +38,9 @@ func _physics_process(_delta : float):
 			active_cable = cable
 
 	if !active_cable:
-		$Message.visible = false
+		panels.switch_panel("cut", false)
 	else:
-		$Message.text = 'Cut'
-		$Message.rect_position = cable_info["cross_point"]
-		$Message.visible = true
+		panels.switch_panel("cut", true, cable_info["cross_point"], true)
 
 func _input(event : InputEvent):
 	if event.is_action_pressed("ui_accept"):

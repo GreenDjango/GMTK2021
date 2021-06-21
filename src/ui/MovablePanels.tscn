@@ -1,0 +1,58 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/scripts/MovablePanels.gd" type="Script" id=1]
+[ext_resource path="res://assets/fonts/PressStart2P-vaV7.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 8
+font_data = ExtResource( 2 )
+
+[node name="MovablePanels" type="Control"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="CutPanel" type="PanelContainer" parent="."]
+modulate = Color( 1, 1, 1, 0.784314 )
+margin_right = 40.0
+margin_bottom = 24.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Message" type="Label" parent="CutPanel"]
+margin_left = 7.0
+margin_top = 8.0
+margin_right = 47.0
+margin_bottom = 16.0
+custom_fonts/font = SubResource( 1 )
+text = "Cut:C"
+align = 1
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="TowerPanel" type="PanelContainer" parent="."]
+modulate = Color( 1, 1, 1, 0.784314 )
+margin_left = 64.0
+margin_right = 118.0
+margin_bottom = 24.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Message" type="Label" parent="TowerPanel"]
+margin_left = 7.0
+margin_top = 8.0
+margin_right = 79.0
+margin_bottom = 16.0
+custom_fonts/font = SubResource( 1 )
+text = "Upgarde:U"
+align = 1
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}

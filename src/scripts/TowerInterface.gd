@@ -12,4 +12,5 @@ func add_cable(cable : Node2D):
 	ref_cables[cable.get_instance_id()] = cable
 
 func remove_cable(cable : Node2D):
+	# warning-ignore:return_value_discarded
 	ref_cables.erase(cable.get_instance_id())

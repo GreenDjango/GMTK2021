@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+class_name Player
+
 var velocity := Vector2.ZERO
 const speed_max := 70.0
 var acceleration := 0.1
