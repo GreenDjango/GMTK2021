@@ -12,11 +12,11 @@
 [ext_resource path="res://src/nodes/Tower.tscn" type="PackedScene" id=10]
 [ext_resource path="res://src/ui/MovablePanels.tscn" type="PackedScene" id=11]
 
-[sub_resource type="SphereMesh" id=2]
+[sub_resource type="SphereMesh" id=1]
 radius = 2.0
 height = 4.0
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=2]
 size = 8
 outline_size = 1
 outline_color = Color( 0, 0, 0, 0.705882 )
@@ -53,6 +53,8 @@ limit_left = 0
 limit_top = 0
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
+smoothing_enabled = true
+smoothing_speed = 10.0
 drag_margin_left = 0.1
 drag_margin_top = 0.1
 drag_margin_right = 0.1
@@ -63,13 +65,7 @@ script = ExtResource( 5 )
 __meta__ = {
 "_edit_lock_": true
 }
-anchor_path = NodePath("../Anchor")
 player_path = NodePath("..")
-
-[node name="Anchor" type="Position2D" parent="YSort/Player"]
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Mob" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 250, 150 )
@@ -92,7 +88,7 @@ position = Vector2( 280, 115 )
 
 [node name="Test" type="MeshInstance2D" parent="."]
 visible = false
-mesh = SubResource( 2 )
+mesh = SubResource( 1 )
 
 [node name="MovablePanels" parent="." instance=ExtResource( 11 )]
 visible = false
@@ -107,7 +103,7 @@ margin_top = 3.0
 margin_right = -2.0
 margin_bottom = 11.0
 grow_horizontal = 0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 2 )
 text = "Debug"
 align = 2
 __meta__ = {

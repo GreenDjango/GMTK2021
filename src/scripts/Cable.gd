@@ -5,21 +5,23 @@ class_name Cable
 var from := Vector2.ZERO setget setFrom, getFrom
 var to := Vector2.ZERO setget setTo, getTo
 var target : Node2D = null
+var target_offset := Vector2.ZERO
 
 var ref_in : Node2D = null setget setRefIn
 var ref_out : Node2D = null setget setRefOut
 
 func _process(_delat : float):
 	if visible && target:
-		setTo(target.global_position)
+		setTo(target.global_position + target_offset)
 
 func _draw():
-	draw_line(from, to, Color.black, 1)
+	draw_line(from, to, Color.black, 1.5)
 
 func reset():
 	setFrom(Vector2.ZERO)
 	setTo(Vector2.ZERO)
 	target = null
+	target_offset = Vector2.ZERO
 	setRefIn(null)
 	setRefOut(null)
 

@@ -5,7 +5,7 @@ export(PackedScene) var cable_scene
 onready var player := $YSort/Player
 onready var castle := $YSort/Castle
 onready var cables := $Cables
-onready var main_cable := $MainCable
+onready var main_cable : Cable = $MainCable
 onready var panels : MovablePanels = $MovablePanels
 var active_cable : Cable = null
 
@@ -45,11 +45,14 @@ func _physics_process(_delta : float):
 func _input(event : InputEvent):
 	if event.is_action_pressed("ui_accept"):
 		var nearbyTowers : Array = player.get_nearby_towers()
-		var tower = nearbyTowers.pop_back()
+		var tower : TowerInterface = nearbyTowers.pop_back()
 		if player.is_grab && tower && tower != main_cable.ref_in:
-			put_cable(tower)
+			if !tower.is_link(main_cable.ref_in):
+				put_cable(tower)
 		elif !player.is_grab && tower:
 			grab_cable(tower)
+		elif player.is_grab:
+			release_cable()
 	if event.is_action_pressed("cut"):
 		if active_cable:
 			active_cable.reset()
@@ -59,6 +62,7 @@ func _input(event : InputEvent):
 func grab_cable(tower : TowerInterface):
 	main_cable.from = tower.get_cablefix().global_position
 	main_cable.target = player
+	main_cable.target_offset = Vector2(5, 2)
 	main_cable.ref_in = tower
 	main_cable.ref_out = player
 	main_cable.visible = true
@@ -99,11 +103,11 @@ func debug_links():
 	var towers = get_tree().get_nodes_in_group("tower")
 	print('--- TOWERS')
 	for tower in towers:
-		prints(tower, tower.ref_cables)
+		prints(tower, tower.ref_cables.keys())
 	print('--- CABLES')
 	prints(main_cable, main_cable.ref_in, main_cable.ref_out)
 	for cable in cables.get_children():
-		prints(cable, cable.ref_in, cable.ref_out)
+		prints('Cable:' + str(cable.get_instance_id()), cable.ref_in, cable.ref_out)
 
 func is_under_cable(cable_start : Vector2, cable_end : Vector2, player_area : CollisionShape2D):
 	#      A: circle

@@ -14,3 +14,9 @@ func add_cable(cable : Node2D):
 func remove_cable(cable : Node2D):
 	# warning-ignore:return_value_discarded
 	ref_cables.erase(cable.get_instance_id())
+
+func is_link(tower : TowerInterface):
+	for id in ref_cables:
+		if tower.ref_cables.has(id):
+			return true
+	return false
