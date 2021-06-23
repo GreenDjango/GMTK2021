@@ -67,20 +67,17 @@ __meta__ = {
 }
 player_path = NodePath("..")
 
-[node name="Mob" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 250, 150 )
-
 [node name="Castle" parent="YSort" instance=ExtResource( 7 )]
 position = Vector2( 72, 25 )
 
 [node name="Tower" parent="YSort" instance=ExtResource( 10 )]
-position = Vector2( 230, 51 )
+position = Vector2( 255, 77 )
 
 [node name="Tower2" parent="YSort" instance=ExtResource( 10 )]
-position = Vector2( 200, 115 )
+position = Vector2( 200, 170 )
 
 [node name="Tower3" parent="YSort" instance=ExtResource( 10 )]
-position = Vector2( 280, 115 )
+position = Vector2( 310, 170 )
 
 [node name="MainCable" parent="." instance=ExtResource( 9 )]
 

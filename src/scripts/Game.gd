@@ -2,6 +2,7 @@ extends Node2D
 
 export(PackedScene) var mob_scene
 export(PackedScene) var cable_scene
+onready var map : Map = $Map
 onready var player := $YSort/Player
 onready var castle := $YSort/Castle
 onready var cables := $Cables
@@ -44,6 +45,7 @@ func _physics_process(_delta : float):
 
 func _input(event : InputEvent):
 	if event.is_action_pressed("ui_accept"):
+		spawn_mob()
 		var nearbyTowers : Array = player.get_nearby_towers()
 		var tower : TowerInterface = nearbyTowers.pop_back()
 		if player.is_grab && tower && tower != main_cable.ref_in:
@@ -155,6 +157,6 @@ func is_under_cable(cable_start : Vector2, cable_end : Vector2, player_area : Co
 
 
 func spawn_mob():
-	var scene : Node2D = mob_scene.instance()
-	scene.position = Vector2(160 + rand_range(0, 20), 100 + rand_range(0, 10))
-	$YSort.add_child(scene)
+	var mob : Mob = mob_scene.instance()
+	map.add_mob_on_random_path(mob)
+	mob.speed = rand_range(0.01, 0.05)
